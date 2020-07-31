@@ -1,4 +1,4 @@
-<h2 align="center">@oory/package-template</h2>  
+<h2 align="center">react-email-misspelled</h2>  
 
 <div align="center">  
 

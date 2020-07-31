@@ -1,5 +1,5 @@
 {
-	"name": "@oory/package-template",
+	"name": "react-email-misspelled",
 	"description": "A npm package template",
 	"main": "lib/index.js",
 	"scripts": {
@@ -21,7 +21,7 @@
 	],
 	"repository": {
 		"type": "git",
-		"url": "git+https://github.com/sl-julienamblard/package-template.git"
+		"url": "git+https://github.com/sl-julienamblard/react-email-misspelled.git"
 	},
 	"author": {
 		"name": "Julien Amblard",
@@ -30,9 +30,9 @@
 	},
 	"license": "MIT",
 	"bugs": {
-		"url": "https://github.com/sl-julienamblard/package-template/issues"
+		"url": "https://github.com/sl-julienamblard/react-email-misspelled/issues"
 	},
-	"homepage": "https://github.com/sl-julienamblard/package-template#readme",
+	"homepage": "https://github.com/sl-julienamblard/react-email-misspelled#readme",
 	"keywords": [
 		"npm",
 		"package",
