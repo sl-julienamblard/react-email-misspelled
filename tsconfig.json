@@ -15,5 +15,5 @@
 		"noUnusedParameters": true
 	},
 	"typeRoots": ["node_modules/@types"],
-	"include": ["**/*.ts", "**/*.tsx"]
+	"include": ["./src"]
 }
