@@ -5,15 +5,15 @@ import { top100 } from "email-misspelled"
 import EmailMisspelledInput from "../../src"
 import "./core.scss"
 
-const CustomeSuggestions = ({ suggestions, onClick }) => {
-	return (
-		<ul>
-			{suggestions.map(suggestion => (
-				<li onClick={() => onClick(suggestion)}>{suggestion.suggest}</li>
-			))}
-		</ul>
-	)
-}
+// const CustomeSuggestions = ({ suggestions, onClick }) => {
+// 	return (
+// 		<ul>
+// 			{suggestions.map(suggestion => (
+// 				<li onClick={() => onClick(suggestion)}>{suggestion.suggest}</li>
+// 			))}
+// 		</ul>
+// 	)
+// }
 
 const App = () => {
 	const handleChange = e => console.log("on handlechange", e)

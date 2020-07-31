@@ -9,6 +9,12 @@ const config = {
 		modules: [_path.resolve(__dirname, "./src"), "node_modules"],
 		extensions: [".js", ".jsx", ".ts", ".tsx"],
 	},
+	externals: {
+		react: "react",
+		"react-dom": "react-dom",
+		"email-misspelled": "email-misspelled",
+		"styled-components": "styled-components",
+	},
 	module: {
 		rules: [
 			{
@@ -23,6 +29,7 @@ const config = {
 					options: {
 						presets: ["@babel/preset-env", "@babel/preset-typescript", "@babel/preset-react"],
 						plugins: [
+							"babel-plugin-styled-components",
 							"@babel/plugin-proposal-object-rest-spread",
 							"@babel/plugin-proposal-class-properties",
 							"@babel/plugin-proposal-optional-chaining",

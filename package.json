@@ -11,7 +11,7 @@
 		"test:coverage:report": "codecov --token=$CODECOV_TOKEN",
 		"clear": "rimraf ./lib",
 		"build:all": "yarn clear && yarn build:webpack && yarn build:transpile && yarn build:types",
-		"build:transpile": "babel src/index.ts --out-dir lib --extensions .ts",
+		"build:transpile": "babel src/index.tsx --out-dir lib --extensions .tsx",
 		"build:webpack": "webpack --config webpack.config.ts",
 		"build:types": "tsc",
 		"prepublishOnly": "yarn test:ci && yarn build:all"
