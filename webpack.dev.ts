@@ -7,24 +7,25 @@ const htmlWebpackPlugin = new HtmlWebpackPlugin({
 	filename: "./index.html",
 })
 module.exports = {
-	entry: path.join(__dirname, "demo/src/index.ts"),
+	entry: path.join(__dirname, "demo/src/index"),
 	output: {
 		path: path.resolve(__dirname, "demo/dist"),
 	},
-	target: "node",
+	target: "web",
 	module: {
 		rules: [
 			{
-				test: /\.scss$/i,
+				test: /\.s?css$/i,
 				use: ["style-loader", "css-loader", "sass-loader"],
 			},
 			{
-				test: /\.(js|ts)$/,
+				test: /\.(t|j)sx?$/,
 				use: {
 					loader: "babel-loader",
 					options: {
-						presets: ["@babel/preset-env", "@babel/preset-typescript"],
+						presets: ["@babel/preset-env", "@babel/preset-typescript", "@babel/preset-react"],
 						plugins: [
+							"babel-plugin-styled-components",
 							"@babel/plugin-proposal-object-rest-spread",
 							"@babel/plugin-proposal-class-properties",
 							"@babel/plugin-proposal-optional-chaining",
@@ -43,5 +44,6 @@ module.exports = {
 	devServer: {
 		port: 8645,
 		open: true,
+		hot: true,
 	},
 }

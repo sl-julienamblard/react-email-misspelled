@@ -1,10 +1,11 @@
 {
 	"compilerOptions": {
+		"jsx": "preserve",
 		"baseUrl": "./src",
 		"downlevelIteration": true,
 		"strict": false,
 		"outDir": "./lib",
-		"lib": ["ESNext"],
+		"lib": ["ESNext", "dom"],
 		"declaration": true,
 		"emitDeclarationOnly": true,
 		"isolatedModules": true,
@@ -14,5 +15,5 @@
 		"noUnusedParameters": true
 	},
 	"typeRoots": ["node_modules/@types"],
-	"include": ["src"]
+	"include": ["**/*.ts", "**/*.tsx"]
 }
