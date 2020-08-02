@@ -6,6 +6,8 @@ yarn-debug.log*
 yarn-error.log*
 
 /lib
+/domains.js
+/domains.d.ts
 
 # Runtime data
 pids

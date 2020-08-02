@@ -20,7 +20,6 @@ export const Input = styled.input`
 export const Suggest = styled.div`
 	position: absolute;
 	margin-top: 5px;
-	width: 100%;
 	border-radius: 4px;
 	overflow: hidden;
 `

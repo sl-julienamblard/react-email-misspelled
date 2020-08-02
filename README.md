@@ -2,22 +2,25 @@
 
 <div align="center">  
 
-[![npm](https://img.shields.io/npm/v/@oory/package-template.svg?style=flat-square)](https://www.npmjs.com/package/@oory/package-template)
-[![CircleCI Status](https://img.shields.io/circleci/build/github/sl-julienamblard/package-template/master?style=flat-square)](https://circleci.com/gh/sl-julienamblard/package-template)
-[![codecov](https://img.shields.io/codecov/c/github/sl-julienamblard/package-template?logo=codecov&style=flat-square)](https://codecov.io/gh/sl-julienamblard/package-template)
-[![npm](https://img.shields.io/bundlephobia/minzip/@oory/package-template?style=flat-square)](https://www.npmjs.com/package/@oory/package-template)
-[![npm](https://img.shields.io/npm/dt/@oory/package-template.svg?style=flat-square)](https://www.npmjs.com/package/@oory/package-template)
-[![npm](https://img.shields.io/npm/l/@oory/package-template.svg?style=flat-square)](https://github.com/sl-julienamblard/package-template/blob/master/LICENSE)
+[![npm](https://img.shields.io/npm/v/react-email-misspelled.svg?style=flat-square)](https://www.npmjs.com/package/react-email-misspelled)
+[![CircleCI Status](https://img.shields.io/circleci/build/github/sl-julienamblard/react-email-misspelled/master?style=flat-square)](https://circleci.com/gh/sl-julienamblard/react-email-misspelled)
+[![codecov](https://img.shields.io/codecov/c/github/sl-julienamblard/react-email-misspelled?logo=codecov&style=flat-square)](https://codecov.io/gh/sl-julienamblard/react-email-misspelled)
+[![npm](https://img.shields.io/bundlephobia/minzip/react-email-misspelled?style=flat-square)](https://www.npmjs.com/package/react-email-misspelled)
+[![npm](https://img.shields.io/npm/dt/react-email-misspelled.svg?style=flat-square)](https://www.npmjs.com/package/react-email-misspelled)
+[![npm](https://img.shields.io/npm/l/react-email-misspelled.svg?style=flat-square)](https://github.com/sl-julienamblard/react-email-misspelled/blob/master/LICENSE)
 
 </div>  
 
-This is a package template.
-You should not have to install this :D
-package description..
+This is a react wrapper for [email-misspelled package](https://www.npmjs.com/package/email-misspelled)  
+Check the misspelled email's domain and return a list (or first) of matching domain suggestions sorted by corrections needed
+
+The string comparison is based on [this algorithm](https://github.com/trekhleb/javascript-algorithms/tree/master/src/algorithms/string/levenshtein-distance)
 
 ## [live codepen demo](https://codepen.io/Capse/full/LYGVRoP)
 
-![example](https://media1.giphy.com/media/WZmgVLMt7mp44/giphy.gif?cid=ecf05e4704e7mzlx36us86wjo4m1uc3so15npso57hhxo0or&rid=giphy.gif)
+![example](https://raw.githubusercontent.com/sl-julienamblard/email-misspelled/v3/doc/example.gif)
+
+# TODO  
 
 ## Table of Contents
 
@@ -34,13 +37,13 @@ package description..
 *Install with npm:*
 
 ```bash
-    npm i @oory/package-template --save
+    npm i react-email-misspelled --save
 ```
 
 *Install with yarn:*
 
 ```bash
-    yarn add @oory/package-template
+    yarn add react-email-misspelled
 ```
 
 <a id="usages"></a>
@@ -49,7 +52,7 @@ package description..
 
 
 ```js
-import packageTempalte from "package-template"
+import packageTempalte from "react-email-misspelled"
 //do some examples
 ```
 
@@ -69,7 +72,7 @@ import packageTempalte from "package-template"
 <br />
 
 ```js
-import packageTemplate from "@oory/package-template"
+import packageTemplate from "react-email-misspelled"
 //do some js
 ```
 
@@ -90,7 +93,7 @@ description...
 
 **`TypeName`**
 ```ts
-    import { TypeName } from "@oory/package-template/typings"
+    import { TypeName } from "react-email-misspelled/typings"
 
     //type
 ```

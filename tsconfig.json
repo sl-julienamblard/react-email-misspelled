@@ -9,6 +9,7 @@
 		"declaration": true,
 		"emitDeclarationOnly": true,
 		// "isolatedModules": true,
+		"esModuleInterop": true,
 		"forceConsistentCasingInFileNames": true,
 		"moduleResolution": "node",
 		"noUnusedLocals": true,
