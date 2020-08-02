@@ -6,6 +6,11 @@ export const Wrapper = styled.div`
 	position: relative;
 `
 
+export const InputLabel = styled.label`
+	display: block;
+	cursor: pointer;
+`
+
 export const Input = styled.input`
 	${props =>
 		props.styles ||

@@ -3,12 +3,13 @@ import React, { ChangeEvent, useState, useCallback, useRef } from "react"
 import EmailMisspelled, { Result } from "email-misspelled"
 import { EmailMisspelledInputProps } from "./interface"
 import { useOutsideHandler } from "./outsideHooks"
-import { Wrapper, Input } from "./styles"
+import { Wrapper, Input, InputLabel } from "./styles"
 import { FirstSuggestion } from "./suggestions"
 
 export const EmailMisspelledWithInput = ({
-	id = "",
+	id = "react-email-misspelled-with-input",
 	className = "",
+	label = "Email",
 	name,
 	defaultValue = "",
 	placeholder = "",
@@ -57,6 +58,7 @@ export const EmailMisspelledWithInput = ({
 
 	return (
 		<Wrapper className={className.trim()} ref={$wrapper}>
+			<InputLabel htmlFor={id}>{label}</InputLabel>
 			<Input
 				id={id}
 				name={name}

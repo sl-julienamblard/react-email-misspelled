@@ -14,6 +14,7 @@ export interface SuggestionsComponentProps {
 export interface EmailMisspelledInputProps extends EmailMisspelledConfig {
 	className?: string
 	id?: string
+	label?: string
 	defaultValue?: string
 	pattern?: RegExp
 	name?: string
