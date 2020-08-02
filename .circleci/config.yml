@@ -13,10 +13,24 @@ aliases:
           tags:
               ignore: /.*/
 
+    - &alpha_tag_filter
+      filters:
+          tags:
+              only: /^v[\d\.]+-alpha\.\d$/
+          branches:
+              ignore: /.*/
+
+    - &beta_tag_filter
+      filters:
+          tags:
+              only: /^v[\d\.]+-beta\.\d$/
+          branches:
+              ignore: /.*/
+
     - &canary_tag_filter
       filters:
           tags:
-              only: /^v[\d\.]+-(canary|alpha|beta)\.\d$/
+              only: /^v[\d\.]+-canary\.\d$/
           branches:
               ignore: /.*/
 
@@ -26,6 +40,51 @@ aliases:
               only: /^v[\d\.]+$/
           branches:
               ignore: /.*/
+    - &restor
+      restore_cache:
+          keys:
+              - v1-dependencies-{{ checksum "package.json" }}
+              - v1-dependencies-
+    - &install_deps
+      run:
+          name: Install dependencies
+          command: yarn install --no-lockfile
+    - &run_test_ci
+      run:
+          name: Run tests
+          command: yarn test:ci
+    - &run_test_coverage
+      run:
+          name: Build coverage
+          command: npm run test:coverage
+    - &store_artifact
+      store_artifacts:
+          path: tests/coverage/lcov-report
+    - &report_coverage
+      run:
+          name: Report coverage
+          command: npm run test:coverage:report
+    - &build_webpack
+      run:
+          name: Run build:webpack
+          command: yarn build:webpack
+    - &build_babel_transpile
+      run:
+          name: Run build:transpile
+          command: yarn build:transpile
+    - &build_ts_types
+      run:
+          name: Run build:types
+          command: yarn build:types
+    - &build_copy_domains
+      run:
+          name: Run build:domains:copy
+          command: yarn build:domains:copy
+    - &save_cache
+      save_cache:
+          paths:
+              - node_modules
+          key: v1-dependencies-{{ checksum "package.json" }}
 
     - &attach
       attach_workspace:
@@ -40,10 +99,22 @@ aliases:
           command: |
               echo 'export CURRENT_PACKAGE_VERSION=$(git describe --tags)' >> $BASH_ENV
               echo 'export CURRENT_PACKAGE_NAME=$(jq ".name" ~/repos/package.json -r)' >> $BASH_ENV
-    - &versioning_package
+    - &versioning_package_prod
       run:
           name: Versioning package
           command: npm version $CURRENT_PACKAGE_VERSION --no-git-tag-version
+    - &versioning_package_alpha
+      run:
+          name: Versioning package
+          command: npm version $CURRENT_PACKAGE_VERSION --no-git-tag-version --preid alpha
+    - &versioning_package_beta
+      run:
+          name: Versioning package
+          command: npm version $CURRENT_PACKAGE_VERSION --no-git-tag-version --preid beta
+    - &versioning_package_canary
+      run:
+          name: Versioning package
+          command: npm version $CURRENT_PACKAGE_VERSION --no-git-tag-version --preid canary
     - &print_informations
       run:
           name: Print package informations
@@ -59,34 +130,42 @@ jobs:
         <<: *defaults
         steps:
             - checkout
-            - restore_cache:
-                  keys:
-                      - v1-dependencies-{{ checksum "package.json" }}
-                      - v1-dependencies-
+            - *restor
+            - *install_deps
+            - *run_test_ci
+            - *run_test_coverage
+            - *store_artifact
+            - *report_coverage
+            - *build_babel_transpile
+            - *build_ts_types
+            - *build_copy_domains
+            - *save_cache
+            - *persist
+
+    publish-alpha:
+        <<: *defaults
+        steps:
+            - *attach
+            - *auth_registry
+            - *save_package_informations
+            - *versioning_package_alpha
+            - *print_informations
             - run:
-                  name: Install dependencies
-                  command: yarn install --no-lockfile
+                  name: Publish package
+                  command: npm publish --access public --tag alpha
+            - *persist
+
+    publish-beta:
+        <<: *defaults
+        steps:
+            - *attach
+            - *auth_registry
+            - *save_package_informations
+            - *versioning_package_beta
+            - *print_informations
             - run:
-                  name: Run tests
-                  command: yarn test:ci
-            - run:
-                  name: Build coverage
-                  command: npm run test:coverage
-            - store_artifacts:
-                  path: tests/coverage/lcov-report
-            - run:
-                  name: Report coverage
-                  command: npm run test:coverage:report
-            - run:
-                  name: Run build:webpack
-                  command: yarn build:webpack
-            - run:
-                  name: Run build:types
-                  command: yarn build:types
-            - save_cache:
-                  paths:
-                      - node_modules
-                  key: v1-dependencies-{{ checksum "package.json" }}
+                  name: Publish package
+                  command: npm publish --access public --tag beta
             - *persist
 
     publish-canary:
@@ -95,20 +174,20 @@ jobs:
             - *attach
             - *auth_registry
             - *save_package_informations
-            - *versioning_package
+            - *versioning_package_canary
             - *print_informations
             - run:
                   name: Publish package
                   command: npm publish --access public --tag canary
             - *persist
 
-    publish:
+    publish-prod:
         <<: *defaults
         steps:
             - *attach
             - *auth_registry
             - *save_package_informations
-            - *versioning_package
+            - *versioning_package_prod
             - *print_informations
             - run:
                   name: Publish package
@@ -116,11 +195,31 @@ jobs:
             - *persist
 
 workflows:
-    version: 2
+    version: 2.1
     tests:
         jobs:
             - tests:
                   <<: *test_tag_filter
+
+    test-publish-alpha:
+        jobs:
+            - tests:
+                  <<: *alpha_tag_filter
+            - publish-alpha:
+                  context: personal_packages_vars
+                  requires:
+                      - tests
+                  <<: *alpha_tag_filter
+
+    test-publish-beta:
+        jobs:
+            - tests:
+                  <<: *beta_tag_filter
+            - publish-beta:
+                  context: personal_packages_vars
+                  requires:
+                      - tests
+                  <<: *beta_tag_filter
 
     test-publish-canary:
         jobs:
@@ -132,11 +231,11 @@ workflows:
                       - tests
                   <<: *canary_tag_filter
 
-    test-publish:
+    test-publish-prod:
         jobs:
             - tests:
                   <<: *prod_tag_filter
-            - publish:
+            - publish-prod:
                   context: personal_packages_vars
                   requires:
                       - tests
